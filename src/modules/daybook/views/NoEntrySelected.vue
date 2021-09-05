@@ -2,7 +2,7 @@
   <div class="d-flex justify-content-center">
     <h1 class="mt-5">No hay nada seleccionado</h1>
   </div>
-  <Fab />
+  <Fab  icon="plus"/>
 </template>
 
 <script>
