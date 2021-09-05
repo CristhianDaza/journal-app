@@ -11,9 +11,9 @@
 
     <div class="entry-scrollarea">
       <Entry
-        v-for="item in entriesByTerm"
-        :key="item.id"
-        :entries="getEntriesByTerm"
+        v-for="entry in entriesByTerm"
+        :key="entry.id"
+        :entry="entry"
       />
     </div>
   </div>
