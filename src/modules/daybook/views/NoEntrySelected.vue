@@ -2,11 +2,17 @@
   <div class="d-flex justify-content-center">
     <h1 class="mt-5">No hay nada seleccionado</h1>
   </div>
+  <Fab />
 </template>
 
 <script>
+import { defineAsyncComponent } from 'vue'
+
 export default {
-  name: 'NoEntrySelected'
+  name: 'NoEntrySelected',
+  components: {
+    Fab: defineAsyncComponent(() => import('../components/Fab'))
+  }
 }
 </script>
 
