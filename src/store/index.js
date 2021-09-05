@@ -1,12 +1,8 @@
 import { createStore } from 'vuex'
+import journalModule from '../modules/daybook/store/journal'
 
 export default createStore({
-  state: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
   modules: {
+    journalModule
   }
 })
