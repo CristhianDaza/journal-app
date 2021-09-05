@@ -2,7 +2,7 @@
   <Navbar />
   <div class="d-flex">
     <div class="col-4">
-      EntryList
+      <EntryList />
     </div>
     <div class="col">
       <router-view />
@@ -15,7 +15,8 @@ import { defineAsyncComponent } from 'vue'
 export default {
   name: 'DayBookLayout',
   components: {
-    Navbar: defineAsyncComponent(() => import('../components/Navbar'))
+    Navbar: defineAsyncComponent(() => import('../components/Navbar')),
+    EntryList: defineAsyncComponent(() => import('../components/EntryList'))
   }
 }
 </script>
