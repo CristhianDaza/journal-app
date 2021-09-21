@@ -62,14 +62,27 @@ export default {
     Fab: defineAsyncComponent(() => import('../components/Fab'))
   },
   methods: {
-    ...mapActions('journalModule', ['updateEntry']),
+    ...mapActions('journalModule', ['updateEntry', 'createEntry']),
     loadEntry () {
-      const entry = this.getEntryById(this.id)
-      if (!entry) this.$router.push({ name: 'no-entry' })
+      let entry
+      if (this.id === 'new') {
+        entry = {
+          text: '',
+          date: new Date().getTime()
+        }
+      } else {
+        entry = this.getEntryById(this.id)
+        if (!entry) this.$router.push({ name: 'no-entry' })
+      }
       this.entry = entry
     },
-    saveEntry () {
-      this.updateEntry(this.entry)
+    async saveEntry () {
+      if (this.entry.id) {
+        await this.updateEntry(this.entry)
+      } else {
+        const id = await this.createEntry(this.entry)
+        if (id) this.$router.push({ name: 'entry', params: { id } })
+      }
     }
   },
   computed: {

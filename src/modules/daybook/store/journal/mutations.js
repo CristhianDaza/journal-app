@@ -8,3 +8,7 @@ export const updateEntry = (state, entry) => {
   state.entries[idx] = entry
   state.isLoading = false
 }
+
+export const addEntry = (state, entry) => {
+  state.entries = [entry, ...state.entries]
+}

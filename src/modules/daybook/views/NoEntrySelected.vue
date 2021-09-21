@@ -2,7 +2,10 @@
   <div class="d-flex justify-content-center">
     <h1 class="mt-5">No hay nada seleccionado</h1>
   </div>
-  <Fab  icon="plus"/>
+  <Fab
+    icon="plus"
+    @click="createNewEntry"
+    />
 </template>
 
 <script>
@@ -12,6 +15,11 @@ export default {
   name: 'NoEntrySelected',
   components: {
     Fab: defineAsyncComponent(() => import('../components/Fab'))
+  },
+  methods: {
+    createNewEntry () {
+      this.$router.push({ name: 'entry', params: { id: 'new' } })
+    }
   }
 }
 </script>
