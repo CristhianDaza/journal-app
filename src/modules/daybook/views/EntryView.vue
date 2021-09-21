@@ -11,7 +11,11 @@
         <span class="mx-2 fs-4 fw-light">{{ yearDay }}</span>
       </div>
       <div>
-        <button class="btn btn-danger mx-2">
+        <button
+          class="btn btn-danger mx-2"
+          @click="onDeleteEntry"
+          :disabled="!entry.id"
+        >
           Borrar
           <i class="fa fa-trash-alt"></i>
         </button>
@@ -62,7 +66,7 @@ export default {
     Fab: defineAsyncComponent(() => import('../components/Fab'))
   },
   methods: {
-    ...mapActions('journalModule', ['updateEntry', 'createEntry']),
+    ...mapActions('journalModule', ['updateEntry', 'createEntry', 'deleteEntry']),
     loadEntry () {
       let entry
       if (this.id === 'new') {
@@ -83,6 +87,11 @@ export default {
         const id = await this.createEntry(this.entry)
         if (id) this.$router.push({ name: 'entry', params: { id } })
       }
+    },
+    async onDeleteEntry () {
+      const { id } = this.entry
+      await this.deleteEntry(id)
+      this.$router.push({ name: 'no-entry' })
     }
   },
   computed: {
