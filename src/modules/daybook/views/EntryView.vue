@@ -19,7 +19,17 @@
           Borrar
           <i class="fa fa-trash-alt"></i>
         </button>
-        <button class="btn btn-primary">
+        <input
+          type="file"
+          @change="onSelectedImage"
+          ref="imageSelector"
+          v-show="false"
+          accept="image/png, image/jpeg, image/jpg"
+        >
+        <button
+          class="btn btn-primary"
+          @click="onSelectImage"
+        >
           Subir foto
           <i class="fa fa-upload"></i>
         </button>
@@ -33,7 +43,14 @@
       ></textarea>
     </div>
     <img
-      src="https://cdn.pixabay.com/photo/2021/08/25/20/42/field-6574455_960_720.jpg"
+      v-if="entry.picture && !localImage"
+      :src="entry.picture"
+      alt="entry-picture"
+      class="img-thumbnail"
+    >
+    <img
+      v-if="localImage"
+      :src="localImage"
       alt="entry-picture"
       class="img-thumbnail"
     >
@@ -49,6 +66,7 @@ import { defineAsyncComponent } from 'vue'
 import { mapGetters, mapActions } from 'vuex'
 import getDayMonthYear from '../helpers/getDayMonthYear'
 import Swal from 'sweetalert2'
+import uploadImage from '../helpers/uploadImage'
 
 export default {
   name: 'EntryView',
@@ -60,7 +78,9 @@ export default {
   },
   data () {
     return {
-      entry: null
+      entry: null,
+      localImage: null,
+      file: null
     }
   },
   components: {
@@ -89,7 +109,8 @@ export default {
       })
 
       Swal.showLoading()
-
+      const picture = await uploadImage(this.file)
+      this.entry.picture = picture
       if (this.entry.id) {
         await this.updateEntry(this.entry)
       } else {
@@ -97,6 +118,8 @@ export default {
         if (id) this.$router.push({ name: 'entry', params: { id } })
       }
 
+      this.file = null
+      this.localImage = null
       Swal.fire('Guardado', 'Entrada registrada con éxito', 'success')
     },
     async onDeleteEntry () {
@@ -119,6 +142,23 @@ export default {
         this.$router.push({ name: 'no-entry' })
         Swal.fire('Eliminado', '', 'success')
       }
+    },
+    onSelectedImage (event) {
+      const file = event.target.files[0]
+      if (file) {
+        const fr = new FileReader()
+        fr.onload = () => {
+          this.localImage = fr.result
+        }
+        fr.readAsDataURL(file)
+        this.file = file
+      } else {
+        this.localImage = null
+        this.file = null
+      }
+    },
+    onSelectImage () {
+      this.$refs.imageSelector.click()
     }
   },
   computed: {
