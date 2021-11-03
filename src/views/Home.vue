@@ -12,7 +12,7 @@
 <script>
 export default {
   methods: {
-    goToDaybook() {
+    goToDaybook () {
       this.$router.push({ name: 'no-entry' })
     }
   }

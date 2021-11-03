@@ -13,3 +13,9 @@ export const journalState = {
     }
   ]
 }
+
+export const entry = {
+  date: 1632268427987,
+  text: 'Entrada mockeada',
+  id: '-MkA-uLKS-d4JyT5Y-fs'
+}
