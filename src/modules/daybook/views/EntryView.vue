@@ -102,8 +102,7 @@ export default {
       this.entry = entry
     },
     async saveEntry () {
-      // eslint-disable-next-line no-new
-      new Swal({
+      Swal.fire({
         title: 'Espere por favor',
         allowOutsideClick: false
       })
